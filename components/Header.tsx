@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/utils/gsap";
@@ -16,6 +17,12 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const prefersReduced = usePrefersReducedMotion();
+  const pathname = usePathname();
+
+  // The homepage hero is a dark full-bleed scene, so at the top of that page
+  // the header needs light chrome. Once scrolled (glass bar) or on any light
+  // subpage, fall back to ink-on-light.
+  const onDark = pathname === "/" && !scrolled;
 
   // Glass-on-scroll + first-load entrance.
   useGSAP(
@@ -81,11 +88,16 @@ export default function Header() {
         <Link
           href="/"
           data-head
-          className="flex items-baseline gap-2 text-ink"
+          className={cn(
+            "flex items-baseline gap-2 transition-colors",
+            onDark ? "text-white" : "text-ink",
+          )}
           aria-label="合同会社アフト トップへ"
         >
           <span className="text-xl font-semibold tracking-tight">AFT</span>
-          <span className="label text-steel">Aft LLC</span>
+          <span className={cn("label transition-colors", onDark ? "text-white/55" : "text-steel")}>
+            Aft LLC
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex" aria-label="メインナビ">
@@ -94,16 +106,29 @@ export default function Header() {
               key={item.label}
               href={item.href}
               data-head
-              className="group relative text-sm font-medium text-ink/80 transition-colors hover:text-ink"
+              className={cn(
+                "group relative text-sm font-medium transition-colors",
+                onDark ? "text-white/75 hover:text-white" : "text-ink/80 hover:text-ink",
+              )}
             >
               {item.label}
-              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-navy transition-all duration-300 group-hover:w-full" />
+              <span
+                className={cn(
+                  "absolute -bottom-1.5 left-0 h-px w-0 transition-all duration-300 group-hover:w-full",
+                  onDark ? "bg-white" : "bg-navy",
+                )}
+              />
             </Link>
           ))}
           <Link
             href="/contact"
             data-head
-            className="group/btn inline-flex items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-deep"
+            className={cn(
+              "group/btn inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5",
+              onDark
+                ? "border border-white/30 text-white hover:bg-white/10"
+                : "bg-navy text-white hover:bg-[#1d3450]",
+            )}
           >
             Contact
           </Link>
@@ -112,7 +137,10 @@ export default function Header() {
         <button
           data-head
           onClick={() => setOpen((v) => !v)}
-          className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink md:hidden"
+          className={cn(
+            "relative z-50 flex h-10 w-10 items-center justify-center rounded-full border transition-colors md:hidden",
+            onDark ? "border-white/30 text-white" : "border-line text-ink",
+          )}
           aria-label={open ? "メニューを閉じる" : "メニューを開く"}
           aria-expanded={open}
         >

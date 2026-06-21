@@ -76,10 +76,10 @@ export default function CompanyPreview() {
         <div className="lg:pt-2">
           <div
             data-card
-            className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-navy to-darknavy p-8 text-white shadow-[0_50px_100px_-55px_rgba(11,31,51,0.7)] sm:p-10"
+            className="relative overflow-hidden rounded-[1.75rem] bg-navy p-8 text-white ring-1 ring-white/10 shadow-[0_50px_100px_-55px_rgba(0,0,0,0.7)] sm:p-10"
           >
             {/* coordinate decor */}
-            <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.5]" aria-hidden>
+            <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.22] [mask-image:radial-gradient(80%_80%_at_85%_15%,#000,transparent_70%)]" aria-hidden>
               <defs>
                 <pattern id="coordc" width="34" height="34" patternUnits="userSpaceOnUse">
                   <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.12)" />
@@ -87,7 +87,6 @@ export default function CompanyPreview() {
               </defs>
               <rect width="100%" height="100%" fill="url(#coordc)" />
             </svg>
-            <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(143,182,196,0.25),transparent_70%)]" aria-hidden />
 
             {/* logo mark */}
             <div className="relative flex items-center justify-between">

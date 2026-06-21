@@ -6,15 +6,19 @@ import { gsap, onReveal } from "@/utils/gsap";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import Button from "@/components/Button";
-import {
-  ServerRackVisual,
-  BuildingVisual,
-  OfficePlanVisual,
-  GlobalMapVisual,
-} from "@/components/visuals";
+import MediaFrame from "@/components/MediaFrame";
 import { services } from "@/data/services";
 
-const visuals = [ServerRackVisual, BuildingVisual, OfficePlanVisual, GlobalMapVisual];
+/**
+ * Photo slots per service. Drop a file into `public/images/` and set its `src`
+ * here — the branded placeholder shows until then.
+ */
+const media: { src?: string; caption: string }[] = [
+  { src: "/images/network.jpg", caption: "ITソリューション" },
+  { src: "/images/construction.jpg", caption: "建設・インフラ" },
+  { src: "/images/office-device.jpg", caption: "オフィス環境" },
+  { src: "/images/trade.jpg", caption: "流通・グローバル" },
+];
 
 export default function ServiceShowcase() {
   const root = useRef<HTMLElement>(null);
@@ -69,7 +73,7 @@ export default function ServiceShowcase() {
 
         <div className="mt-16 space-y-7">
           {services.map((s, i) => {
-            const Visual = visuals[i];
+            const m = media[i];
             const reverse = i % 2 === 1;
             return (
               <article
@@ -100,12 +104,16 @@ export default function ServiceShowcase() {
 
                 {/* Visual */}
                 <div className={reverse ? "lg:order-1" : ""}>
-                  <div
+                  <MediaFrame
                     data-visual
-                    className="overflow-hidden rounded-[1.5rem] shadow-[0_30px_70px_-44px_rgba(11,31,51,0.6)]"
-                  >
-                    <Visual uid={`svc-${s.no}`} className="aspect-16/11 w-full" />
-                  </div>
+                    src={m.src}
+                    alt={`${s.title}（${s.subtitle}）の様子`}
+                    index={s.no}
+                    label={s.tags.join(" · ")}
+                    caption={m.caption}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="aspect-16/11 w-full rounded-[1.5rem] shadow-[0_30px_70px_-44px_rgba(11,31,51,0.6)]"
+                  />
                 </div>
               </article>
             );

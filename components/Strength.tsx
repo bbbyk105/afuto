@@ -8,7 +8,6 @@ import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
 import { strengths } from "@/data/services";
 import { site } from "@/data/site";
-import { ShieldCheck } from "lucide-react";
 
 export default function Strength() {
   const root = useRef<HTMLElement>(null);
@@ -70,7 +69,7 @@ export default function Strength() {
           {/* Featured: Public Sector / qualification */}
           <article
             data-card
-            className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-navy to-darknavy p-8 text-white md:col-span-2"
+            className="relative overflow-hidden rounded-[1.5rem] bg-navy p-8 text-white ring-1 ring-white/10 md:col-span-2"
           >
             <div className="pointer-events-none absolute inset-0 opacity-[0.1] bg-[linear-gradient(to_right,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:44px_44px]" aria-hidden />
             <span className="pointer-events-none absolute -bottom-8 right-2 select-none text-[7rem] font-semibold uppercase leading-none tracking-tighter text-white/[0.04]">
@@ -83,7 +82,6 @@ export default function Strength() {
                 <p className="mt-3 text-sm leading-relaxed text-white/70">{featured.body}</p>
               </div>
               <div className="flex shrink-0 items-center gap-4 rounded-2xl border border-white/12 bg-white/[0.05] px-6 py-5">
-                <ShieldCheck className="h-9 w-9 text-cyan" strokeWidth={1.5} />
                 <div>
                   <p className="text-base font-semibold leading-tight">{site.qualification}</p>
                   <p className="mt-1 text-xs text-white/55">各省庁・公的機関の入札案件に対応</p>

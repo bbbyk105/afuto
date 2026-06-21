@@ -4,7 +4,7 @@ import { site } from "@/data/site";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-navy text-white">
+    <footer className="relative overflow-hidden bg-[#08090b] text-white">
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] bg-grid" aria-hidden />
       <div className="relative mx-auto max-w-(--container) px-6 lg:px-10">
         <div className="grid gap-14 border-b border-white/10 py-20 md:grid-cols-[1.4fr_1fr_1fr]">

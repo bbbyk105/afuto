@@ -84,7 +84,7 @@ export default function ContactForm() {
             setFields(initial);
             setStatus("idle");
           }}
-          className="mt-8 inline-flex items-center rounded-full border border-line-strong px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-navy"
+          className="mt-8 inline-flex items-center rounded-full border border-line-strong px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-white/40"
         >
           続けて入力する
         </button>
@@ -184,7 +184,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="group/btn inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-navy px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-deep disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="group/btn inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-navy px-8 py-4 text-sm font-medium text-white ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1d3450] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {status === "submitting" ? (
           <>

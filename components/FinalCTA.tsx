@@ -32,7 +32,7 @@ export default function FinalCTA() {
   );
 
   return (
-    <section ref={root} className="relative overflow-hidden bg-gradient-to-br from-navy via-navy to-darknavy text-white">
+    <section ref={root} className="relative overflow-hidden bg-[#08090b] text-white">
       <div className="pointer-events-none absolute inset-0 opacity-[0.09] bg-grid" aria-hidden />
       {/* animated network nodes */}
       <svg

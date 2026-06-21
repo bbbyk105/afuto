@@ -6,7 +6,7 @@ import { gsap, reveal } from "@/utils/gsap";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
-import { ServerRackVisual } from "@/components/visuals";
+import MediaFrame from "@/components/MediaFrame";
 
 export default function Intro() {
   const root = useRef<HTMLElement>(null);
@@ -92,13 +92,16 @@ export default function Intro() {
             </div>
           </div>
 
-          {/* small abstract visual so it isn't text-only */}
-          <div
+          {/* photo accent so it isn't text-only */}
+          <MediaFrame
             data-introcard
-            className="mt-8 overflow-hidden rounded-2xl shadow-[0_30px_70px_-45px_rgba(11,31,51,0.55)]"
-          >
-            <ServerRackVisual uid="intro" className="h-44 w-full" />
-          </div>
+            src="/images/network.jpg"
+            alt="ネットワーク・サーバー環境の構築"
+            label="Network · System"
+            caption="止めない環境を"
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            className="mt-8 h-44 w-full rounded-2xl shadow-[0_30px_70px_-45px_rgba(11,31,51,0.55)]"
+          />
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
@@ -8,6 +8,14 @@ import { site } from "@/data/site";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Japanese typeface — Noto Sans JP, used across the site (incl. hero).
+const notoSansJp = Noto_Sans_JP({
+  variable: "--font-noto",
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -63,7 +71,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja" className={`${inter.variable} h-full`}>
+    <html lang="ja" className={`${inter.variable} ${notoSansJp.variable} h-full`}>
       <body className="min-h-full antialiased">
         <SmoothScroll>
           <a

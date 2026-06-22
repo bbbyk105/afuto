@@ -84,7 +84,7 @@ export default function ServiceShowcase() {
                 {/* Text */}
                 <div className={reverse ? "lg:order-2 lg:pl-6" : "lg:pr-6"}>
                   <div className="flex items-center gap-4">
-                    <span data-num className="serif-num text-5xl font-semibold text-pale">
+                    <span data-num className="serif-num text-5xl font-semibold text-steel/55">
                       {s.no}
                     </span>
                     <span className="h-px flex-1 bg-line" />
@@ -98,7 +98,7 @@ export default function ServiceShowcase() {
                     {s.body}
                   </p>
                   <div data-txt className="mt-8">
-                    <Button href="/service" variant="secondary">詳しく見る</Button>
+                    <Button href={s.href} variant="secondary">詳しく見る</Button>
                   </div>
                 </div>
 

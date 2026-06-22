@@ -65,9 +65,9 @@ export default function Process() {
                 </span>
                 <div className="flex items-baseline gap-3 lg:mt-6">
                   <span className="serif-num text-2xl font-semibold text-steel">{s.no}</span>
-                  <h3 className="text-base font-semibold text-ink">{s.title}</h3>
+                  <h3 className="text-[1.0625rem] font-semibold text-ink">{s.title}</h3>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{s.body}</p>
+                <p className="mt-4 text-[0.9375rem] leading-[1.9] text-muted">{s.body}</p>
               </li>
             ))}
           </ol>

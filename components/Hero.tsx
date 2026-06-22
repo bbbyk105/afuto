@@ -53,21 +53,21 @@ export default function Hero() {
 
       tl.from(
         root.current.querySelectorAll("[data-hero-line]"),
-        { yPercent: 118, duration: 1.2, stagger: 0.12, delay: 0.2 },
+        { yPercent: 118, duration: 0.85, stagger: 0.09 },
         0,
       );
 
       tl.from(
         root.current.querySelectorAll("[data-hero-up]"),
-        { y: 22, opacity: 0, duration: 1, stagger: 0.08 },
-        0.4,
+        { y: 22, opacity: 0, duration: 0.7, stagger: 0.06 },
+        0.1,
       );
 
       if (terrainRef.current) {
         tl.from(
           terrainRef.current,
-          { y: 50, opacity: 0, duration: 1.5, ease: "power3.out" },
-          0.4,
+          { y: 40, opacity: 0, duration: 0.9, ease: "power3.out" },
+          0.05,
         );
       }
 
@@ -113,7 +113,7 @@ export default function Hero() {
             </span>
           </span>
           <span className="block overflow-hidden">
-            <span data-hero-line className="block text-pale">
+            <span data-hero-line className="block text-deep">
               動き出す環境を。
             </span>
           </span>

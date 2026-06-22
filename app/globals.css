@@ -10,14 +10,14 @@
   --color-surface: #111419;
   --color-soft: #1a1e24;
   --color-pale: #2a3744;
-  --color-ink: #eef2f5;
-  --color-muted: #93a0aa;
+  --color-ink: #f5f7fa; /* 見出し */
+  --color-muted: #b8c2cc; /* 本文 */
   --color-navy: #16293c;
   --color-darknavy: #07111d;
   --color-deep: #a7c3cf;
-  --color-steel: #7e95a6;
-  --color-line: rgba(255, 255, 255, 0.09);
-  --color-line-strong: rgba(255, 255, 255, 0.16);
+  --color-steel: #7f8a94; /* 補足・英字ラベル */
+  --color-line: rgba(255, 255, 255, 0.07);
+  --color-line-strong: rgba(255, 255, 255, 0.13);
   --color-cyan: #8fb6c4;
 
   --font-sans:
@@ -50,7 +50,7 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-feature-settings: "palt" 1;
-  line-height: 1.7;
+  line-height: 1.85;
   overflow-x: hidden;
 }
 
@@ -73,8 +73,8 @@ html.lenis body {
 
 /* ---- Typography helpers ---- */
 .label {
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  font-size: 0.6875rem; /* 11px — 装飾英字ラベル */
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
 }

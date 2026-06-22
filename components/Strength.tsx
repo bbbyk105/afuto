@@ -1,39 +1,26 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
 import { strengths } from "@/data/services";
 import { site } from "@/data/site";
-import { ShieldCheck } from "lucide-react";
+
+const directives: RevealDirective[] = [
+  {
+    select: "[data-card]",
+    trigger: "[data-grid]",
+    start: "top 80%",
+    from: { opacity: 0, y: 36, scale: 0.97, transformOrigin: "center" },
+    to: { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out", stagger: 0.09 },
+  },
+];
 
 export default function Strength() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      const grid = root.current.querySelector("[data-grid]");
-      reveal(root.current.querySelectorAll("[data-card]"), {
-        trigger: grid,
-        start: "top 80%",
-        from: { opacity: 0, y: 36, scale: 0.97, transformOrigin: "center" },
-        to: { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out", stagger: 0.09 },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   // first four = light cards, last (public sector) = highlighted navy card
   const cards = strengths.slice(0, 4);
   const featured = strengths[4];
 
   return (
-    <section ref={root} className="bg-bg py-[clamp(5rem,9vw,9rem)]">
+    <RevealScope directives={directives} className="bg-bg py-[clamp(5rem,9vw,9rem)]">
       <div className="mx-auto max-w-(--container) px-6 lg:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -70,7 +57,7 @@ export default function Strength() {
           {/* Featured: Public Sector / qualification */}
           <article
             data-card
-            className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-navy to-darknavy p-8 text-white md:col-span-2"
+            className="relative overflow-hidden rounded-[1.5rem] bg-navy p-8 text-white ring-1 ring-white/10 md:col-span-2"
           >
             <div className="pointer-events-none absolute inset-0 opacity-[0.1] bg-[linear-gradient(to_right,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:44px_44px]" aria-hidden />
             <span className="pointer-events-none absolute -bottom-8 right-2 select-none text-[7rem] font-semibold uppercase leading-none tracking-tighter text-white/[0.04]">
@@ -83,7 +70,6 @@ export default function Strength() {
                 <p className="mt-3 text-sm leading-relaxed text-white/70">{featured.body}</p>
               </div>
               <div className="flex shrink-0 items-center gap-4 rounded-2xl border border-white/12 bg-white/[0.05] px-6 py-5">
-                <ShieldCheck className="h-9 w-9 text-cyan" strokeWidth={1.5} />
                 <div>
                   <p className="text-base font-semibold leading-tight">{site.qualification}</p>
                   <p className="mt-1 text-xs text-white/55">各省庁・公的機関の入札案件に対応</p>
@@ -93,6 +79,6 @@ export default function Strength() {
           </article>
         </div>
       </div>
-    </section>
+    </RevealScope>
   );
 }

@@ -1,46 +1,33 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap, reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
 import { process } from "@/data/services";
 
+const directives: RevealDirective[] = [
+  {
+    select: "[data-step]",
+    trigger: "[data-steps]",
+    start: "top 78%",
+    from: { opacity: 0, y: 30 },
+    to: { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.12 },
+  },
+  {
+    parallax: "from",
+    select: "[data-line]",
+    trigger: "[data-steps]",
+    start: "top 75%",
+    end: "bottom 70%",
+    scrub: 1,
+    vars: { scaleX: 0, transformOrigin: "left center" },
+  },
+];
+
 export default function Process() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      const steps = root.current.querySelector("[data-steps]");
-
-      reveal(root.current.querySelectorAll("[data-step]"), {
-        trigger: steps,
-        start: "top 78%",
-        from: { opacity: 0, y: 30 },
-        to: { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.12 },
-      });
-
-      gsap.from("[data-line]", {
-        scaleX: 0,
-        transformOrigin: "left center",
-        ease: "none",
-        scrollTrigger: {
-          trigger: "[data-steps]",
-          start: "top 75%",
-          end: "bottom 70%",
-          scrub: 1,
-        },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   return (
-    <section ref={root} className="relative border-t border-line bg-bg-alt py-[clamp(5rem,9vw,9rem)]">
+    <RevealScope
+      directives={directives}
+      className="relative border-t border-line bg-bg-alt py-[clamp(5rem,9vw,9rem)]"
+    >
       <div className="mx-auto max-w-(--container) px-6 lg:px-10">
         <SectionLabel>Process</SectionLabel>
         <AnimatedText
@@ -65,14 +52,14 @@ export default function Process() {
                 </span>
                 <div className="flex items-baseline gap-3 lg:mt-6">
                   <span className="serif-num text-2xl font-semibold text-steel">{s.no}</span>
-                  <h3 className="text-base font-semibold text-ink">{s.title}</h3>
+                  <h3 className="text-[1.0625rem] font-semibold text-ink">{s.title}</h3>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{s.body}</p>
+                <p className="mt-4 text-[0.9375rem] leading-[1.9] text-muted">{s.body}</p>
               </li>
             ))}
           </ol>
         </div>
       </div>
-    </section>
+    </RevealScope>
   );
 }

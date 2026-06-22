@@ -4,24 +4,25 @@
    Aft LLC — Design Tokens
    ============================================================ */
 @theme {
-  --color-bg: #f4f6f8;
-  --color-bg-alt: #fafaf7;
-  --color-surface: #ffffff;
-  --color-soft: #e8ecef;
-  --color-pale: #dde8ef;
-  --color-ink: #0d161f;
-  --color-muted: #5b6772;
-  --color-navy: #0b1f33;
+  /* Dark theme — whole site matched to the hero (#08090b base) */
+  --color-bg: #08090b;
+  --color-bg-alt: #0b0d11;
+  --color-surface: #111419;
+  --color-soft: #1a1e24;
+  --color-pale: #2a3744;
+  --color-ink: #f5f7fa; /* 見出し */
+  --color-muted: #b8c2cc; /* 本文 */
+  --color-navy: #16293c;
   --color-darknavy: #07111d;
-  --color-deep: #12395a;
-  --color-steel: #7893a6;
-  --color-line: rgba(11, 31, 51, 0.12);
-  --color-line-strong: rgba(11, 31, 51, 0.2);
+  --color-deep: #a7c3cf;
+  --color-steel: #7f8a94; /* 補足・英字ラベル */
+  --color-line: rgba(255, 255, 255, 0.07);
+  --color-line-strong: rgba(255, 255, 255, 0.13);
   --color-cyan: #8fb6c4;
 
   --font-sans:
-    var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo,
+    var(--font-inter), var(--font-noto), ui-sans-serif, system-ui, -apple-system,
+    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
     sans-serif;
 
   --radius-card: 1.5rem;
@@ -48,9 +49,15 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-feature-settings: "palt" 1;
-  line-height: 1.7;
+  line-height: 1.85;
   overflow-x: hidden;
+}
+
+/* palt（プロポーショナル詰め）は和文本文の行リズムを乱すため、
+   見出し・英字ラベルなど詰めて映える要素にのみ限定適用する。 */
+.display,
+.label {
+  font-feature-settings: "palt" 1;
 }
 
 /* Lenis smooth scroll */
@@ -72,8 +79,8 @@ html.lenis body {
 
 /* ---- Typography helpers ---- */
 .label {
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  font-size: 0.6875rem; /* 11px — 装飾英字ラベル */
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
 }

@@ -1,50 +1,38 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
 import Button from "@/components/Button";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
 import { company } from "@/data/company";
 
+const directives: RevealDirective[] = [
+  {
+    select: "[data-card]",
+    trigger: "[data-card]",
+    start: "top 84%",
+    from: { clipPath: "inset(0 0 100% 0)" },
+    to: { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out" },
+  },
+  {
+    select: "[data-row]",
+    trigger: "[data-card]",
+    start: "top 82%",
+    from: { opacity: 0, y: 16 },
+    to: { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.06, delay: 0.25 },
+  },
+  {
+    select: "[data-greet]",
+    trigger: "[data-greetwrap]",
+    start: "top 80%",
+    from: { opacity: 0, y: 22 },
+    to: { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1 },
+  },
+];
+
 export default function CompanyPreview() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      const card = root.current.querySelector("[data-card]");
-      const greetWrap = root.current.querySelector("[data-greetwrap]");
-
-      reveal(root.current.querySelector("[data-card]"), {
-        trigger: card,
-        start: "top 84%",
-        from: { clipPath: "inset(0 0 100% 0)" },
-        to: { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out" },
-      });
-      reveal(root.current.querySelectorAll("[data-row]"), {
-        trigger: card,
-        start: "top 82%",
-        from: { opacity: 0, y: 16 },
-        to: { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.06, delay: 0.25 },
-      });
-      reveal(root.current.querySelectorAll("[data-greet]"), {
-        trigger: greetWrap,
-        start: "top 80%",
-        from: { opacity: 0, y: 22 },
-        to: { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1 },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   return (
-    <section
-      ref={root}
+    <RevealScope
       id="company"
+      directives={directives}
       className="relative scroll-mt-24 overflow-hidden bg-surface py-[clamp(5rem,9vw,9rem)]"
     >
       <div className="relative mx-auto grid max-w-(--container) grid-cols-1 gap-14 px-6 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:px-10">
@@ -76,10 +64,10 @@ export default function CompanyPreview() {
         <div className="lg:pt-2">
           <div
             data-card
-            className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-navy to-darknavy p-8 text-white shadow-[0_50px_100px_-55px_rgba(11,31,51,0.7)] sm:p-10"
+            className="relative overflow-hidden rounded-[1.75rem] bg-navy p-8 text-white ring-1 ring-white/10 shadow-[0_50px_100px_-55px_rgba(0,0,0,0.7)] sm:p-10"
           >
             {/* coordinate decor */}
-            <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.5]" aria-hidden>
+            <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.22] [mask-image:radial-gradient(80%_80%_at_85%_15%,#000,transparent_70%)]" aria-hidden>
               <defs>
                 <pattern id="coordc" width="34" height="34" patternUnits="userSpaceOnUse">
                   <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.12)" />
@@ -87,7 +75,6 @@ export default function CompanyPreview() {
               </defs>
               <rect width="100%" height="100%" fill="url(#coordc)" />
             </svg>
-            <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(143,182,196,0.25),transparent_70%)]" aria-hidden />
 
             {/* logo mark */}
             <div className="relative flex items-center justify-between">
@@ -115,6 +102,6 @@ export default function CompanyPreview() {
           </div>
         </div>
       </div>
-    </section>
+    </RevealScope>
   );
 }

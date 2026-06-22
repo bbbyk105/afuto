@@ -1,13 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import StructuredData from "@/components/StructuredData";
 import { site } from "@/data/site";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Japanese typeface — Noto Sans JP, used across the site (incl. hero).
+// 実使用ウェイトのみ読み込む（body=500 / .display=600）。700・800 は未使用。
+const notoSansJp = Noto_Sans_JP({
+  variable: "--font-noto",
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -21,6 +31,7 @@ export const metadata: Metadata = {
   },
   description:
     "合同会社アフトは、OA機器・ネットワーク環境・システム構築・建設インフラサポート・流通支援まで、企業の業務効率化とコスト最適化を一貫して支援します。",
+  alternates: { canonical: "/" },
   keywords: [
     "合同会社アフト",
     "Aft LLC",
@@ -63,8 +74,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja" className={`${inter.variable} h-full`}>
+    <html lang="ja" className={`${inter.variable} ${notoSansJp.variable} h-full`}>
       <body className="min-h-full antialiased">
+        <StructuredData />
         <SmoothScroll>
           <a
             href="#main"

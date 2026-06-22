@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import SectionLabel from "@/components/SectionLabel";
 import Reveal from "@/components/Reveal";
-import OfficeSolutions from "@/components/OfficeSolutions";
-import FacilitySupport from "@/components/FacilitySupport";
 import Process from "@/components/Process";
 import FinalCTA from "@/components/FinalCTA";
 import { services } from "@/data/services";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/service" },
   title: "事業内容",
   description:
     "ITソリューション、建設・インフラサポート、オフィスソリューション、流通・グローバルサポート。アフトの4つの支援領域をご紹介します。",
@@ -51,15 +52,25 @@ export default function ServicePage() {
                     ))}
                   </div>
                 </div>
-                <p className="text-base leading-[1.95] text-muted">{s.body}</p>
+                <div>
+                  <p className="text-base leading-[1.95] text-muted">{s.body}</p>
+                  <Link
+                    href={s.href}
+                    className="group mt-6 inline-flex items-center gap-2 text-sm font-medium text-deep transition-colors hover:text-ink"
+                  >
+                    詳しく見る
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                      aria-hidden
+                    />
+                  </Link>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <FacilitySupport />
-      <OfficeSolutions />
       <Process />
       <FinalCTA />
     </>

@@ -288,29 +288,30 @@ export function GlobalMapVisual({ uid, className }: VisualProps) {
    ==================================================================== */
 export function MiniVisual({ kind }: { kind: number }) {
   const common = "h-full w-full";
+  // light steel silhouettes that read on the dark icon thumbnails
+  const BODY = "#aebfc9";
+  const BODY2 = "#43586b";
   switch (kind) {
     case 0: // MFP / printer
       return (
         <svg viewBox="0 0 200 120" className={common} fill="none" aria-hidden>
-          <rect width="200" height="120" rx="12" fill="#EEF3F6" />
-          <rect x="64" y="30" width="72" height="44" rx="6" fill="#0B1F33" opacity="0.9" />
-          <rect x="72" y="74" width="56" height="22" rx="4" fill="#DDE8EF" />
+          <rect x="64" y="30" width="72" height="44" rx="6" fill={BODY} opacity="0.95" />
+          <rect x="72" y="74" width="56" height="22" rx="4" fill="#11161d" />
           <rect x="78" y="80" width="44" height="4" rx="2" fill="#7893A6" />
           <circle cx="120" cy="42" r="4" fill="#8FB6C4" />
-          <rect x="76" y="38" width="22" height="6" rx="3" fill="#6F8EA4" />
+          <rect x="76" y="38" width="22" height="6" rx="3" fill="#43586b" />
         </svg>
       );
     case 1: // phone / telecom
       return (
         <svg viewBox="0 0 200 120" className={common} fill="none" aria-hidden>
-          <rect width="200" height="120" rx="12" fill="#EEF3F6" />
           <g stroke="#7893A6" strokeWidth="2" opacity="0.5">
             <path d="M40 86 Q100 40 160 86" strokeDasharray="3 5" />
           </g>
           {[60, 100, 140].map((x, i) => (
             <g key={i}>
-              <rect x={x - 12} y="60" width="24" height="34" rx="5" fill="#0B1F33" />
-              <rect x={x - 7} y="66" width="14" height="10" rx="2" fill="#8FB6C4" opacity="0.7" />
+              <rect x={x - 12} y="60" width="24" height="34" rx="5" fill={BODY} />
+              <rect x={x - 7} y="66" width="14" height="10" rx="2" fill="#8FB6C4" opacity="0.85" />
             </g>
           ))}
         </svg>
@@ -318,7 +319,6 @@ export function MiniVisual({ kind }: { kind: number }) {
     case 2: // network / LAN
       return (
         <svg viewBox="0 0 200 120" className={common} fill="none" aria-hidden>
-          <rect width="200" height="120" rx="12" fill="#EEF3F6" />
           <g stroke="#6F8EA4" strokeWidth="1.75">
             <path d="M100 36 L60 78 M100 36 L140 78 M60 78 L140 78" />
           </g>
@@ -327,7 +327,7 @@ export function MiniVisual({ kind }: { kind: number }) {
             [60, 78],
             [140, 78],
           ].map(([cx, cy], i) => (
-            <circle key={i} cx={cx} cy={cy} r={i === 0 ? 12 : 9} fill="#0B1F33" />
+            <circle key={i} cx={cx} cy={cy} r={i === 0 ? 12 : 9} fill={BODY} />
           ))}
           <circle cx="100" cy="36" r="4" fill="#8FB6C4" />
         </svg>
@@ -335,31 +335,28 @@ export function MiniVisual({ kind }: { kind: number }) {
     case 3: // PC / peripherals
       return (
         <svg viewBox="0 0 200 120" className={common} fill="none" aria-hidden>
-          <rect width="200" height="120" rx="12" fill="#EEF3F6" />
-          <rect x="58" y="34" width="84" height="50" rx="5" fill="#0B1F33" />
-          <rect x="64" y="40" width="72" height="38" rx="2" fill="#12395A" />
-          <rect x="72" y="48" width="40" height="4" rx="2" fill="#8FB6C4" opacity="0.7" />
-          <rect x="72" y="58" width="56" height="3" rx="1.5" fill="#7893A6" opacity="0.6" />
+          <rect x="58" y="34" width="84" height="50" rx="5" fill={BODY} />
+          <rect x="64" y="40" width="72" height="38" rx="2" fill={BODY2} />
+          <rect x="72" y="48" width="40" height="4" rx="2" fill="#8FB6C4" opacity="0.9" />
+          <rect x="72" y="58" width="56" height="3" rx="1.5" fill="#cdd9e1" opacity="0.6" />
           <rect x="86" y="84" width="28" height="6" rx="2" fill="#7893A6" />
         </svg>
       );
     case 4: // security / shield
       return (
         <svg viewBox="0 0 200 120" className={common} fill="none" aria-hidden>
-          <rect width="200" height="120" rx="12" fill="#EEF3F6" />
           <path
             d="M100 28 L132 40 V66 C132 86 118 96 100 102 C82 96 68 86 68 66 V40 Z"
-            fill="#0B1F33"
+            fill={BODY}
           />
-          <path d="M88 64 l9 9 l16 -18" stroke="#8FB6C4" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M88 64 l9 9 l16 -18" stroke="#16293c" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
     default: // maintenance / cycle
       return (
         <svg viewBox="0 0 200 120" className={common} fill="none" aria-hidden>
-          <rect width="200" height="120" rx="12" fill="#EEF3F6" />
           <circle cx="100" cy="62" r="28" stroke="#6F8EA4" strokeWidth="3" fill="none" strokeDasharray="120 40" />
-          <circle cx="100" cy="62" r="10" fill="#0B1F33" />
+          <circle cx="100" cy="62" r="10" fill={BODY} />
           <path d="M122 44 l6 -10 l-12 2" fill="#8FB6C4" />
         </svg>
       );

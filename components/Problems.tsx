@@ -40,9 +40,6 @@ export default function Problems() {
 
   return (
     <section ref={root} className="relative overflow-hidden bg-bg py-[clamp(5rem,9vw,9rem)]">
-      {/* pale panel behind the row */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-b from-pale/40 to-pale/0" aria-hidden />
-
       <div className="relative mx-auto max-w-(--container) px-6 lg:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -65,20 +62,20 @@ export default function Problems() {
             <article
               key={p.no}
               data-card
-              className="group relative flex min-h-[16rem] w-[78vw] shrink-0 flex-col justify-between overflow-hidden rounded-3xl bg-surface p-6 shadow-[0_24px_60px_-44px_rgba(11,31,51,0.5)] ring-1 ring-line/60 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_-44px_rgba(11,31,51,0.55)] sm:w-[58vw] lg:w-auto"
+              className="group relative flex min-h-[16rem] w-[78vw] shrink-0 flex-col overflow-hidden rounded-3xl bg-surface p-6 shadow-[0_24px_60px_-44px_rgba(0,0,0,0.55)] ring-1 ring-line/60 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_-44px_rgba(0,0,0,0.6)] sm:w-[58vw] lg:w-auto"
             >
               {/* hover wash */}
-              <span className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-deep to-cyan transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+              <span className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-deep transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
               <div className="flex items-start justify-between">
-                <span className="serif-num text-[2.75rem] font-semibold leading-none text-pale transition-colors duration-300 group-hover:text-steel">
+                <span className="serif-num text-[2.75rem] font-semibold leading-none text-steel transition-colors duration-300 group-hover:text-ink">
                   {p.no}
                 </span>
                 <span className="label text-steel">{p.en}</span>
               </div>
-              <div>
-                <h3 className="text-base font-semibold leading-snug text-ink">{p.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{p.body}</p>
-              </div>
+              <h3 className="mt-9 min-h-[2.75rem] text-base font-semibold leading-snug text-ink">
+                {p.title}
+              </h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-muted">{p.body}</p>
             </article>
           ))}
         </div>

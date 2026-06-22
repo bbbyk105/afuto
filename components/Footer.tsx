@@ -1,16 +1,24 @@
+import Image from "next/image";
 import Link from "next/link";
 import { footerNav } from "@/data/nav";
 import { site } from "@/data/site";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-navy text-white">
+    <footer className="relative overflow-hidden bg-[#08090b] text-white">
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] bg-grid" aria-hidden />
       <div className="relative mx-auto max-w-(--container) px-6 lg:px-10">
         <div className="grid gap-14 border-b border-white/10 py-20 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <p className="text-3xl font-semibold tracking-tight">AFT</p>
-            <p className="mt-2 label text-white/55">Aft LLC</p>
+            <Link href="/" aria-label="合同会社アフト トップへ" className="inline-flex">
+              <Image
+                src="/logos/logo-dark.webp"
+                alt="合同会社アフト"
+                width={711}
+                height={126}
+                className="h-9 w-auto"
+              />
+            </Link>
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/65">
               合同会社アフト。<br />
               企業の生産性を支えるパートナーとして、IT・オフィス・設備・施工・流通を一気通貫で支援します。

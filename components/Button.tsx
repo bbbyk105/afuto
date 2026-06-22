@@ -5,13 +5,13 @@ import { cn } from "@/utils/cn";
 type Variant = "primary" | "secondary" | "ghost-light";
 
 const base =
-  "group/btn inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform";
+  "group/btn inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4 text-[0.9375rem] font-medium tracking-wide transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-navy text-white hover:-translate-y-0.5 hover:bg-deep shadow-[0_10px_30px_-12px_rgba(11,31,51,0.5)]",
+    "bg-navy text-white ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1d3450] shadow-[0_14px_36px_-14px_rgba(0,0,0,0.7)]",
   secondary:
-    "border border-line-strong bg-transparent text-ink hover:-translate-y-0.5 hover:border-navy hover:bg-ink/[0.03]",
+    "border border-line-strong bg-white/[0.02] text-ink hover:-translate-y-0.5 hover:border-white/45 hover:bg-white/[0.06]",
   "ghost-light":
     "border border-white/25 bg-transparent text-white hover:-translate-y-0.5 hover:bg-white hover:text-navy",
 };

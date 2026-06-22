@@ -1,17 +1,49 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/utils/gsap";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import Button from "@/components/Button";
-import HeroVisual from "@/components/HeroVisual";
-import { site } from "@/data/site";
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
+  const terrainRef = useRef<HTMLDivElement>(null);
+  const bloomRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const lastPos = useRef({ x: 0, y: 0 });
   const prefersReduced = usePrefersReducedMotion();
+
+  /* ── Cursor-following "lens": wherever you hover the terrain, the second
+        (overgrown) photo behind it is revealed through a soft circle that
+        tracks the pointer. ─────────────────────────────────────────────── */
+  const lensRadius = () => {
+    const w = terrainRef.current?.clientWidth ?? 1200;
+    return Math.max(110, Math.min(w * 0.1, 200));
+  };
+
+  const moveLens = (clientX: number, clientY: number) => {
+    const box = terrainRef.current?.getBoundingClientRect();
+    if (!box || !bloomRef.current || !ringRef.current) return;
+    const x = clientX - box.left;
+    const y = clientY - box.top;
+    lastPos.current = { x, y };
+    const r = lensRadius();
+    bloomRef.current.style.clipPath = `circle(${r}px at ${x}px ${y}px)`;
+    ringRef.current.style.width = `${r * 2}px`;
+    ringRef.current.style.height = `${r * 2}px`;
+    ringRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+    ringRef.current.style.opacity = "1";
+  };
+
+  const hideLens = () => {
+    if (!bloomRef.current || !ringRef.current) return;
+    const { x, y } = lastPos.current;
+    bloomRef.current.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+    ringRef.current.style.opacity = "0";
+  };
 
   useGSAP(
     () => {
@@ -19,53 +51,35 @@ export default function Hero() {
 
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-      tl.from(root.current.querySelectorAll("[data-hero-line]"), {
-        yPercent: 115,
-        duration: 1.15,
-        stagger: 0.12,
-        delay: 0.3,
-      })
-        .from(
-          root.current.querySelectorAll("[data-hero-up]"),
-          { y: 24, opacity: 0, duration: 1, stagger: 0.1 },
-          "-=0.7",
-        )
-        .from(
-          visualRef.current?.querySelectorAll("[data-card]") ?? [],
-          { opacity: 0, y: 40, scale: 0.94, duration: 1.1, stagger: 0.14, transformOrigin: "center" },
-          "-=1.05",
-        );
+      tl.from(
+        root.current.querySelectorAll("[data-hero-line]"),
+        { yPercent: 118, duration: 0.85, stagger: 0.09 },
+        0,
+      );
 
-      // Draw-in of network paths
-      const paths = visualRef.current?.querySelectorAll<SVGGeometryElement>("[data-draw] path");
-      paths?.forEach((p) => {
-        const len = p.getTotalLength();
-        gsap.fromTo(
-          p,
-          { strokeDasharray: len, strokeDashoffset: len },
-          { strokeDashoffset: 0, duration: 1.6, ease: "power2.out", delay: 1 },
-        );
-      });
-      gsap.from(visualRef.current?.querySelectorAll("[data-node] g") ?? [], {
-        opacity: 0,
-        scale: 0,
-        transformOrigin: "center",
-        duration: 0.7,
-        stagger: 0.06,
-        delay: 1.5,
-        ease: "back.out(2)",
-      });
+      tl.from(
+        root.current.querySelectorAll("[data-hero-up]"),
+        { y: 22, opacity: 0, duration: 0.7, stagger: 0.06 },
+        0.1,
+      );
 
-      // Parallax
-      gsap.to(visualRef.current, {
-        yPercent: -7,
+      if (terrainRef.current) {
+        tl.from(
+          terrainRef.current,
+          { y: 40, opacity: 0, duration: 0.9, ease: "power3.out" },
+          0.05,
+        );
+      }
+
+      gsap.to(terrainRef.current, {
+        yPercent: -6,
         ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-      });
-      gsap.to(root.current.querySelector("[data-hero-copy]"), {
-        yPercent: -12,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        scrollTrigger: {
+          trigger: root.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
       });
     },
     { scope: root, dependencies: [prefersReduced] },
@@ -74,82 +88,114 @@ export default function Hero() {
   return (
     <section
       ref={root}
-      className="relative overflow-hidden bg-gradient-to-b from-[#07111D] via-navy to-[#0B1F33] pt-(--header-h) pb-24 text-white"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-[#08090b] pt-(--header-h) text-white"
     >
-      {/* ambient grid + glow */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.14] bg-[linear-gradient(to_right,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:64px_64px]" aria-hidden />
-      <div className="pointer-events-none absolute -top-40 right-0 h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(143,182,196,0.16),transparent_65%)]" aria-hidden />
+      {/* quiet ambient grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(115%_90%_at_30%_15%,#000,transparent_72%)]"
+        aria-hidden
+      />
 
-      <div className="relative mx-auto grid max-w-(--container) grid-cols-1 gap-14 px-6 pt-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-10 lg:px-10 lg:pt-24">
-        {/* Copy */}
-        <div data-hero-copy>
-          <div data-hero-up className="label flex flex-wrap gap-x-3 gap-y-1 text-cyan/90">
-            <span>Office Infrastructure</span>
-            <span aria-hidden className="text-white/30">/</span>
-            <span>IT Solution</span>
-            <span aria-hidden className="text-white/30">/</span>
-            <span>Field Support</span>
-          </div>
-
-          <h1 className="mt-7 display text-[clamp(2.7rem,7.6vw,5.6rem)]">
-            <span className="reveal-mask">
-              <span data-hero-line className="block">
-                企業のインフラを、
-              </span>
-            </span>
-            <span className="reveal-mask">
-              <span data-hero-line className="block bg-gradient-to-r from-white via-pale to-steel bg-clip-text text-transparent">
-                止めない。
-              </span>
-            </span>
-          </h1>
-
-          <p data-hero-up className="mt-8 max-w-xl text-base leading-[1.95] text-white/70 sm:text-lg">
-            IT・オフィス・設備・施工・流通まで。
-            <br className="hidden sm:block" />
-            合同会社アフトは、事業の裏側を支える環境づくりを一気通貫で支援します。
-          </p>
-
-          <div data-hero-up className="mt-10 flex flex-wrap gap-3">
-            <Button href="/contact" variant="ghost-light">相談する</Button>
-            <Button href="/service" variant="ghost-light" arrow={false}>事業内容を見る</Button>
-          </div>
-
-          {/* Trust cards */}
-          <dl data-hero-up className="mt-14 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-4">
-            {site.hero.badges.map((b, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-3 backdrop-blur-sm"
-              >
-                <dt className="text-[0.7rem] font-medium leading-snug text-white/85">{b}</dt>
-              </div>
-            ))}
-          </dl>
+      {/* ── Copy (top) ───────────────────────────────────────────────── */}
+      <div className="relative z-10 mx-auto w-full max-w-(--container) px-6 pt-[clamp(2rem,5vw,4rem)] lg:px-10">
+        <div data-hero-up className="label flex flex-wrap gap-x-3 gap-y-1 text-cyan/90">
+          <span>Office Infrastructure</span>
+          <span aria-hidden className="text-white/25">/</span>
+          <span>IT Solution</span>
+          <span aria-hidden className="text-white/25">/</span>
+          <span>Field Support</span>
         </div>
 
-        {/* Visual */}
-        <div className="relative">
-          <div ref={visualRef} className="relative mx-auto aspect-[4/5] w-full max-w-[26rem] lg:ml-auto lg:mr-2">
-            <HeroVisual />
+        <h1 className="mt-6 display text-[clamp(2.4rem,6.4vw,4.8rem)] text-white">
+          <span className="block overflow-hidden">
+            <span data-hero-line className="block">
+              事業の裏側に、
+            </span>
+          </span>
+          <span className="block overflow-hidden">
+            <span data-hero-line className="block text-deep">
+              動き出す環境を。
+            </span>
+          </span>
+        </h1>
+
+        <p
+          data-hero-up
+          className="mt-7 max-w-md text-sm leading-[2.1] text-white/65 sm:text-[0.95rem]"
+        >
+          IT・オフィス・設備・施工・流通まで。
+          <br />
+          企業活動を支える環境づくりを一気通貫で支援します。
+        </p>
+      </div>
+
+      {/* ── Terrain showcase ─────────────────────────────────────────── */}
+      <div className="relative z-10 mx-auto flex w-full max-w-(--container) flex-1 items-center justify-center px-6 py-6 lg:px-10">
+        <div
+          ref={terrainRef}
+          onMouseEnter={(e) => moveLens(e.clientX, e.clientY)}
+          onMouseMove={(e) => moveLens(e.clientX, e.clientY)}
+          onMouseLeave={hideLens}
+          onTouchMove={(e) => {
+            const t = e.touches[0];
+            if (t) moveLens(t.clientX, t.clientY);
+          }}
+          onTouchEnd={hideLens}
+          className="relative aspect-[1916/821] w-full max-w-[68rem] cursor-none will-change-transform"
+        >
+          {/* Base terrain — bare, before life takes hold */}
+          <Image
+            src="/images/island-base.png"
+            alt="アフトが支える事業基盤を表す立体地形"
+            fill
+            priority
+            quality={90}
+            sizes="(max-width: 1024px) 100vw, 68rem"
+            className="object-contain"
+          />
+
+          {/* Bloom terrain — the second image behind, revealed through the
+              lens that follows the pointer */}
+          <div
+            ref={bloomRef}
+            className="absolute inset-0 transition-[clip-path] duration-200 ease-out"
+            style={{ clipPath: "circle(0px at 50% 50%)" }}
+            aria-hidden
+          >
+            <Image
+              src="/images/island-bloom.png"
+              alt=""
+              fill
+              quality={90}
+              sizes="(max-width: 1024px) 100vw, 68rem"
+              className="object-contain"
+            />
           </div>
+
+          {/* lens ring follows the cursor */}
+          <div
+            ref={ringRef}
+            aria-hidden
+            className="pointer-events-none absolute left-0 top-0 rounded-full border border-white/40 opacity-0 shadow-[0_0_50px_-10px_rgba(155,196,168,0.45)] transition-opacity duration-300 ease-out"
+            style={{ width: 0, height: 0 }}
+          />
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="relative mx-auto mt-14 flex max-w-(--container) items-center gap-3 px-6 lg:px-10">
-        <span className="label text-white/45">Scroll</span>
-        <span className="relative h-px w-16 overflow-hidden bg-white/15">
-          <span className="absolute inset-y-0 left-0 w-1/3 animate-[scrollline_2.2s_ease-in-out_infinite] bg-cyan" />
-        </span>
+      {/* ── Bottom chrome ────────────────────────────────────────────── */}
+      <div className="relative z-10 mx-auto flex w-full max-w-(--container) items-end justify-end px-6 pb-8 lg:px-10 lg:pb-12">
+        <Link
+          data-hero-up
+          href="/service"
+          className="group flex items-center gap-4 text-white/80 transition-colors hover:text-white"
+        >
+          <span className="label">View our services</span>
+          <span className="hidden h-px w-10 bg-white/30 transition-all duration-300 group-hover:w-14 group-hover:bg-white/60 sm:block" />
+          <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 transition-all duration-300 group-hover:border-white/60 group-hover:bg-white/5">
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </span>
+        </Link>
       </div>
-
-      <style>{`
-        @keyframes scrollline {
-          0% { transform: translateX(-110%); }
-          60%,100% { transform: translateX(330%); }
-        }
-      `}</style>
     </section>
   );
 }

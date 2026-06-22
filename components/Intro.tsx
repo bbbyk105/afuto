@@ -1,49 +1,38 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap, reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
-import { ServerRackVisual } from "@/components/visuals";
+import MediaFrame from "@/components/MediaFrame";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
+
+const directives: RevealDirective[] = [
+  {
+    select: "[data-p]",
+    trigger: "[data-pwrap]",
+    start: "top 78%",
+    from: { opacity: 0, y: 22 },
+    to: { opacity: 1, y: 0, duration: 0.95, ease: "power3.out", stagger: 0.12 },
+  },
+  {
+    select: "[data-introcard]",
+    each: true,
+    start: "top 85%",
+    from: { clipPath: "inset(0 0 100% 0)" },
+    to: { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out" },
+  },
+  {
+    parallax: "to",
+    select: "[data-bigword]",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: true,
+    vars: { xPercent: -12 },
+  },
+];
 
 export default function Intro() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      const pwrap = root.current.querySelector("[data-pwrap]");
-
-      reveal(root.current.querySelectorAll("[data-p]"), {
-        trigger: pwrap,
-        start: "top 78%",
-        from: { opacity: 0, y: 22 },
-        to: { opacity: 1, y: 0, duration: 0.95, ease: "power3.out", stagger: 0.12 },
-      });
-      root.current.querySelectorAll<HTMLElement>("[data-introcard]").forEach((el) => {
-        reveal(el, {
-          trigger: el,
-          start: "top 85%",
-          from: { clipPath: "inset(0 0 100% 0)" },
-          to: { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out" },
-        });
-      });
-      gsap.to("[data-bigword]", {
-        xPercent: -12,
-        ease: "none",
-        scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: true },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   return (
-    <section
+    <RevealScope
       id="about"
-      ref={root}
+      directives={directives}
       className="relative scroll-mt-24 overflow-hidden bg-bg-alt py-[clamp(6rem,11vw,12rem)]"
     >
       {/* giant background word */}
@@ -92,15 +81,18 @@ export default function Intro() {
             </div>
           </div>
 
-          {/* small abstract visual so it isn't text-only */}
-          <div
+          {/* photo accent so it isn't text-only */}
+          <MediaFrame
             data-introcard
-            className="mt-8 overflow-hidden rounded-2xl shadow-[0_30px_70px_-45px_rgba(11,31,51,0.55)]"
-          >
-            <ServerRackVisual uid="intro" className="h-44 w-full" />
-          </div>
+            src="/images/network.jpg"
+            alt="ネットワーク・サーバー環境の構築"
+            label="Network · System"
+            caption="止めない環境を"
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            className="mt-8 h-44 w-full rounded-2xl shadow-[0_30px_70px_-45px_rgba(11,31,51,0.55)]"
+          />
         </div>
       </div>
-    </section>
+    </RevealScope>
   );
 }

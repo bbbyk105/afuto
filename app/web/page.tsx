@@ -15,6 +15,7 @@ import {
 } from "@/data/web";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/web" },
   title: "ホームページ制作・集客",
   description:
     "ランディングページからコーポレートサイト・ECサイトまで。SEO・MEO・運用保守まで一気通貫で支援するアフトのWeb制作・集客サービスと参考価格をご紹介します。",

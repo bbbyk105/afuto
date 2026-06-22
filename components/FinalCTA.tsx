@@ -1,38 +1,26 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import Button from "@/components/Button";
 import SectionLabel from "@/components/SectionLabel";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
 import { site } from "@/data/site";
 
+const directives: RevealDirective[] = [
+  {
+    select: "[data-cta-line]",
+    start: "top 70%",
+    from: { yPercent: 115 },
+    to: { yPercent: 0, duration: 1.1, ease: "expo.out", stagger: 0.12 },
+  },
+  {
+    select: "[data-cta-up]",
+    start: "top 70%",
+    from: { opacity: 0, y: 22 },
+    to: { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, delay: 0.3 },
+  },
+];
+
 export default function FinalCTA() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      reveal(root.current.querySelectorAll("[data-cta-line]"), {
-        trigger: root.current,
-        start: "top 70%",
-        from: { yPercent: 115 },
-        to: { yPercent: 0, duration: 1.1, ease: "expo.out", stagger: 0.12 },
-      });
-      reveal(root.current.querySelectorAll("[data-cta-up]"), {
-        trigger: root.current,
-        start: "top 70%",
-        from: { opacity: 0, y: 22 },
-        to: { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, delay: 0.3 },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   return (
-    <section ref={root} className="relative overflow-hidden bg-[#08090b] text-white">
+    <RevealScope directives={directives} className="relative overflow-hidden bg-[#08090b] text-white">
       <div className="pointer-events-none absolute inset-0 opacity-[0.09] bg-grid" aria-hidden />
       {/* animated network nodes */}
       <svg
@@ -113,6 +101,6 @@ export default function FinalCTA() {
           </div>
         </dl>
       </div>
-    </section>
+    </RevealScope>
   );
 }

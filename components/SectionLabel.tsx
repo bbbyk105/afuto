@@ -12,7 +12,7 @@ export default function SectionLabel({
   return (
     <span
       className={cn(
-        "label inline-flex items-center gap-2.5",
+        "label inline-flex items-center gap-3",
         tone === "muted" ? "text-steel" : "text-white/55",
         className,
       )}

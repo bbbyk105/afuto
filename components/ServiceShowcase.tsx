@@ -79,12 +79,12 @@ export default function ServiceShowcase() {
               <article
                 key={s.no}
                 data-row
-                className="group grid grid-cols-1 items-center gap-8 overflow-hidden rounded-[2rem] bg-surface p-7 shadow-[0_30px_80px_-56px_rgba(11,31,51,0.55)] ring-1 ring-line/50 transition-shadow duration-500 hover:shadow-[0_40px_90px_-50px_rgba(11,31,51,0.5)] lg:grid-cols-2 lg:gap-12 lg:p-10"
+                className="group grid grid-cols-1 items-center gap-8 overflow-hidden rounded-[2rem] bg-surface p-7 shadow-[0_30px_80px_-56px_rgba(11,31,51,0.55)] ring-1 ring-line-strong transition-shadow duration-500 hover:shadow-[0_40px_90px_-50px_rgba(11,31,51,0.5)] lg:grid-cols-2 lg:gap-12 lg:p-10"
               >
                 {/* Text */}
                 <div className={reverse ? "lg:order-2 lg:pl-6" : "lg:pr-6"}>
                   <div className="flex items-center gap-4">
-                    <span data-num className="serif-num text-5xl font-semibold text-steel/55">
+                    <span data-num className="serif-num text-5xl font-semibold text-steel">
                       {s.no}
                     </span>
                     <span className="h-px flex-1 bg-line" />
@@ -93,7 +93,7 @@ export default function ServiceShowcase() {
                   <h3 data-txt className="mt-7 display text-[clamp(1.7rem,3vw,2.6rem)] text-ink">
                     {s.title}
                   </h3>
-                  <p data-txt className="mt-2.5 text-lg text-deep">{s.subtitle}</p>
+                  <p data-txt className="mt-3 text-lg text-deep">{s.subtitle}</p>
                   <p data-txt className="mt-6 max-w-xl text-base leading-[1.95] text-muted">
                     {s.body}
                   </p>

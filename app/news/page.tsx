@@ -5,6 +5,7 @@ import FinalCTA from "@/components/FinalCTA";
 import { news } from "@/data/services";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/news" },
   title: "お知らせ",
   description: "合同会社アフトからのお知らせ・新着情報の一覧です。",
 };

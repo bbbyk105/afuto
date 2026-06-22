@@ -1,50 +1,38 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
 import Button from "@/components/Button";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
 import { company } from "@/data/company";
 
+const directives: RevealDirective[] = [
+  {
+    select: "[data-card]",
+    trigger: "[data-card]",
+    start: "top 84%",
+    from: { clipPath: "inset(0 0 100% 0)" },
+    to: { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out" },
+  },
+  {
+    select: "[data-row]",
+    trigger: "[data-card]",
+    start: "top 82%",
+    from: { opacity: 0, y: 16 },
+    to: { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.06, delay: 0.25 },
+  },
+  {
+    select: "[data-greet]",
+    trigger: "[data-greetwrap]",
+    start: "top 80%",
+    from: { opacity: 0, y: 22 },
+    to: { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1 },
+  },
+];
+
 export default function CompanyPreview() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      const card = root.current.querySelector("[data-card]");
-      const greetWrap = root.current.querySelector("[data-greetwrap]");
-
-      reveal(root.current.querySelector("[data-card]"), {
-        trigger: card,
-        start: "top 84%",
-        from: { clipPath: "inset(0 0 100% 0)" },
-        to: { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out" },
-      });
-      reveal(root.current.querySelectorAll("[data-row]"), {
-        trigger: card,
-        start: "top 82%",
-        from: { opacity: 0, y: 16 },
-        to: { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.06, delay: 0.25 },
-      });
-      reveal(root.current.querySelectorAll("[data-greet]"), {
-        trigger: greetWrap,
-        start: "top 80%",
-        from: { opacity: 0, y: 22 },
-        to: { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1 },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   return (
-    <section
-      ref={root}
+    <RevealScope
       id="company"
+      directives={directives}
       className="relative scroll-mt-24 overflow-hidden bg-surface py-[clamp(5rem,9vw,9rem)]"
     >
       <div className="relative mx-auto grid max-w-(--container) grid-cols-1 gap-14 px-6 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:px-10">
@@ -114,6 +102,6 @@ export default function CompanyPreview() {
           </div>
         </div>
       </div>
-    </section>
+    </RevealScope>
   );
 }

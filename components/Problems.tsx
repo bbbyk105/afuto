@@ -67,7 +67,7 @@ export default function Problems() {
               {/* hover wash */}
               <span className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-deep transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
               <div className="flex items-start justify-between">
-                <span className="serif-num text-[2.75rem] font-semibold leading-none text-steel/55 transition-colors duration-300 group-hover:text-steel">
+                <span className="serif-num text-[2.75rem] font-semibold leading-none text-steel transition-colors duration-300 group-hover:text-ink">
                   {p.no}
                 </span>
                 <span className="label text-steel">{p.en}</span>

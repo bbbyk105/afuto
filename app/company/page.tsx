@@ -6,6 +6,7 @@ import FinalCTA from "@/components/FinalCTA";
 import { company } from "@/data/company";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/company" },
   title: "会社概要",
   description:
     "合同会社アフトの会社概要。代表挨拶、所在地、全省庁統一資格などの基本情報をご案内します。",

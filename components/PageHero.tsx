@@ -22,11 +22,11 @@ export default function PageHero({
           trigger="load"
           lines={[titleEn]}
           delay={0.2}
-          className="mt-7 display text-[clamp(3rem,9vw,7rem)] uppercase tracking-tight text-ink"
+          className="mt-7 display break-keep text-[clamp(2rem,9vw,7rem)] uppercase tracking-[0.04em] text-ink"
         />
         <p className="mt-5 text-xl font-medium text-deep">{titleJa}</p>
         {lead && (
-          <p className="mt-8 max-w-2xl text-[1.0625rem] leading-[2] text-muted">{lead}</p>
+          <p className="mt-8 max-w-2xl text-[1.0625rem] leading-[1.8] text-muted">{lead}</p>
         )}
       </div>
     </section>

@@ -5,6 +5,7 @@ import ContactForm from "@/components/ContactForm";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "お問い合わせ",
   description:
     "IT・オフィス・設備・施工の課題は、合同会社アフトへ。現状の整理から導入・運用後のサポートまで、まとめてご相談いただけます。",

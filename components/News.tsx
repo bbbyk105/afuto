@@ -24,7 +24,7 @@ export default function News() {
           </Link>
         </div>
 
-        <Reveal stagger className="mt-12 overflow-hidden rounded-[1.5rem] bg-surface shadow-[0_30px_70px_-52px_rgba(11,31,51,0.5)] ring-1 ring-line/50">
+        <Reveal stagger className="mt-12 overflow-hidden rounded-[1.5rem] bg-surface shadow-[0_30px_70px_-52px_rgba(11,31,51,0.5)] ring-1 ring-line-strong">
           {news.map((n) => (
             <Link
               key={n.date + n.title}

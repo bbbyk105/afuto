@@ -49,9 +49,15 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-feature-settings: "palt" 1;
   line-height: 1.85;
   overflow-x: hidden;
+}
+
+/* palt（プロポーショナル詰め）は和文本文の行リズムを乱すため、
+   見出し・英字ラベルなど詰めて映える要素にのみ限定適用する。 */
+.display,
+.label {
+  font-feature-settings: "palt" 1;
 }
 
 /* Lenis smooth scroll */

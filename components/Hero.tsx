@@ -149,7 +149,7 @@ export default function Hero() {
             alt="アフトが支える事業基盤を表す立体地形"
             fill
             priority
-            quality={100}
+            quality={90}
             sizes="(max-width: 1024px) 100vw, 68rem"
             className="object-contain"
           />
@@ -166,7 +166,7 @@ export default function Hero() {
               src="/images/island-bloom.png"
               alt=""
               fill
-              quality={100}
+              quality={90}
               sizes="(max-width: 1024px) 100vw, 68rem"
               className="object-contain"
             />

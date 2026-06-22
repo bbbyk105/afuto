@@ -1,38 +1,26 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { reveal } from "@/utils/gsap";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import SectionLabel from "@/components/SectionLabel";
 import AnimatedText from "@/components/AnimatedText";
+import RevealScope, { type RevealDirective } from "@/components/RevealScope";
 import { strengths } from "@/data/services";
 import { site } from "@/data/site";
 
+const directives: RevealDirective[] = [
+  {
+    select: "[data-card]",
+    trigger: "[data-grid]",
+    start: "top 80%",
+    from: { opacity: 0, y: 36, scale: 0.97, transformOrigin: "center" },
+    to: { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out", stagger: 0.09 },
+  },
+];
+
 export default function Strength() {
-  const root = useRef<HTMLElement>(null);
-  const prefersReduced = usePrefersReducedMotion();
-
-  useGSAP(
-    () => {
-      if (prefersReduced || !root.current) return;
-      const grid = root.current.querySelector("[data-grid]");
-      reveal(root.current.querySelectorAll("[data-card]"), {
-        trigger: grid,
-        start: "top 80%",
-        from: { opacity: 0, y: 36, scale: 0.97, transformOrigin: "center" },
-        to: { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out", stagger: 0.09 },
-      });
-    },
-    { scope: root, dependencies: [prefersReduced] },
-  );
-
   // first four = light cards, last (public sector) = highlighted navy card
   const cards = strengths.slice(0, 4);
   const featured = strengths[4];
 
   return (
-    <section ref={root} className="bg-bg py-[clamp(5rem,9vw,9rem)]">
+    <RevealScope directives={directives} className="bg-bg py-[clamp(5rem,9vw,9rem)]">
       <div className="mx-auto max-w-(--container) px-6 lg:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -91,6 +79,6 @@ export default function Strength() {
           </article>
         </div>
       </div>
-    </section>
+    </RevealScope>
   );
 }

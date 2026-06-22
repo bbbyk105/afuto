@@ -39,7 +39,7 @@ export default function ServiceDetail({ data }: { data: ServiceDetailData }) {
                 key={item.no}
                 className="flex flex-col bg-surface p-9 transition-colors duration-300 hover:bg-soft lg:p-10"
               >
-                <span className="serif-num text-3xl font-semibold text-steel/55">
+                <span className="serif-num text-3xl font-semibold text-steel">
                   {item.no}
                 </span>
                 <h3 className="mt-7 text-[1.0625rem] font-semibold leading-snug text-ink">

@@ -9,6 +9,7 @@ import FinalCTA from "@/components/FinalCTA";
 import { services } from "@/data/services";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/service" },
   title: "事業内容",
   description:
     "ITソリューション、建設・インフラサポート、オフィスソリューション、流通・グローバルサポート。アフトの4つの支援領域をご紹介します。",

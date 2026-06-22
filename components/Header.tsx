@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -88,16 +89,20 @@ export default function Header() {
         <Link
           href="/"
           data-head
-          className={cn(
-            "flex items-baseline gap-2 transition-colors",
-            onDark ? "text-white" : "text-ink",
-          )}
+          className="flex items-center"
           aria-label="合同会社アフト トップへ"
         >
-          <span className="text-xl font-semibold tracking-tight">AFT</span>
-          <span className={cn("label transition-colors", onDark ? "text-white/55" : "text-steel")}>
-            Aft LLC
-          </span>
+          <Image
+            src="/logos/logo-dark.webp"
+            alt="合同会社アフト"
+            width={711}
+            height={126}
+            priority
+            className={cn(
+              "w-auto transition-all duration-500",
+              scrolled ? "h-6" : "h-7",
+            )}
+          />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex" aria-label="メインナビ">

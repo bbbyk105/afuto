@@ -28,7 +28,7 @@ export default function News() {
           {news.map((n) => (
             <Link
               key={n.date + n.title}
-              href="/#news"
+              href="/news"
               className="group flex flex-col gap-3 px-8 py-9 transition-colors hover:bg-pale/25 sm:flex-row sm:items-center sm:gap-10"
             >
               <time className="serif-num text-sm font-medium text-steel">{n.date}</time>

@@ -183,12 +183,7 @@ export default function Hero() {
       </div>
 
       {/* ── Bottom chrome ────────────────────────────────────────────── */}
-      <div className="relative z-10 mx-auto flex w-full max-w-(--container) items-end justify-between px-6 pb-8 lg:px-10 lg:pb-12">
-        <span data-hero-up className="label flex items-center gap-2 text-white/55">
-          <span className="h-1 w-1 rounded-full bg-cyan" />
-          Scroll
-        </span>
-
+      <div className="relative z-10 mx-auto flex w-full max-w-(--container) items-end justify-end px-6 pb-8 lg:px-10 lg:pb-12">
         <Link
           data-hero-up
           href="/service"
